@@ -1,0 +1,1 @@
+"""NagrikLens Backend Application Package"""
