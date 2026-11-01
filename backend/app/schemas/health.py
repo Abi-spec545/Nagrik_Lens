@@ -10,10 +10,10 @@ class ModuleStatus(BaseModel):
 
 
 class HealthCheckResponse(BaseModel):
-    status: str = Field(..., example="healthy")
+    status: str = Field(..., json_schema_extra={"example": "healthy"})
     app_name: str
     version: str
     environment: str
     timestamp: datetime
-    database: str = Field(..., example="connected")
+    database: str = Field(..., json_schema_extra={"example": "connected"})
     modules: Dict[str, ModuleStatus]

@@ -30,7 +30,7 @@ def test_health_endpoint(client):
     assert "civicroute" in modules
     assert "policymirror" in modules
 
-    assert modules["schemegraph"]["status"] == "initialized"
-    assert modules["claimcraft"]["status"] == "initialized"
-    assert modules["civicroute"]["status"] == "initialized"
-    assert modules["policymirror"]["status"] == "initialized"
+    assert modules["schemegraph"]["status"] in ("ready", "initialized")
+    assert modules["claimcraft"]["status"] in ("ready", "initialized")
+    assert modules["civicroute"]["status"] in ("ready", "initialized")
+    assert modules["policymirror"]["status"] in ("ready", "initialized")

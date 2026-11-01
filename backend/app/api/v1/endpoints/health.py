@@ -34,22 +34,22 @@ def get_health(db: Session = Depends(get_db)) -> HealthCheckResponse:
         modules={
             "schemegraph": ModuleStatus(
                 name="SchemeGraph",
-                status="initialized",
+                status="ready",
                 description="Civic welfare scheme eligibility and relationship discovery graph.",
             ),
             "claimcraft": ModuleStatus(
                 name="ClaimCraft",
-                status="initialized",
+                status="ready",
                 description="Citizen entitlement claim verification and document guidance engine.",
             ),
             "civicroute": ModuleStatus(
                 name="CivicRoute",
-                status="initialized",
+                status="ready",
                 description="Administrative grievance escalation and department routing navigator.",
             ),
             "policymirror": ModuleStatus(
                 name="PolicyMirror",
-                status="initialized",
+                status="ready",
                 description="Plain-language civic policy analysis and impact reflection tool.",
             ),
         },

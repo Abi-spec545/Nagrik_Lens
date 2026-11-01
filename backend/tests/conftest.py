@@ -17,27 +17,23 @@ engine = create_engine(
 )
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-
-@pytest.fixture(scope="session")
-def setup_test_db():
-    Base.metadata.create_all(bind=engine)
-    yield
-    Base.metadata.drop_all(bind=engine)
+# Create tables in test database once
+Base.metadata.create_all(bind=engine)
 
 
 @pytest.fixture
-def db_session(setup_test_db):
-    connection = engine.connect()
-    transaction = connection.begin()
-    session = TestingSessionLocal(bind=connection)
-    yield session
-    session.close()
-    transaction.rollback()
-    connection.close()
+def db_session():
+    """Yields a clean test database session."""
+    session = TestingSessionLocal()
+    try:
+        yield session
+    finally:
+        session.close()
 
 
 @pytest.fixture
 def client(db_session):
+    """Test client with database dependency override."""
     def override_get_db():
         try:
             yield db_session
@@ -45,6 +41,6 @@ def client(db_session):
             pass
 
     app.dependency_overrides[get_db] = override_get_db
-    with TestClient(app) as test_client:
-        yield test_client
+    client = TestClient(app)
+    yield client
     app.dependency_overrides.clear()
